@@ -2,7 +2,7 @@
 from .engine import minify, available_domains, load_domain, load_domains
 from .tokens import count, savings, get_counter, available_tokenizers
 
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 __all__ = [
     "minify",
