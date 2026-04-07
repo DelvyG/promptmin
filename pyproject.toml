@@ -5,11 +5,41 @@ build-backend = "hatchling.build"
 [project]
 name = "promptmin"
 version = "0.2.0"
-description = "Minify LLM prompts to save tokens without losing meaning."
+description = "Minify LLM prompts to save tokens — domain-aware, tiktoken-validated, zero regressions."
 readme = "README.md"
 license = { text = "MIT" }
 authors = [{ name = "DelvyG" }]
 requires-python = ">=3.10"
+keywords = [
+    "llm",
+    "tokens",
+    "tokenizer",
+    "tiktoken",
+    "prompt-engineering",
+    "prompt-compression",
+    "cost-optimization",
+    "openai",
+    "anthropic",
+    "claude",
+    "gemini",
+    "cli",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Text Processing :: Linguistic",
+    "Typing :: Typed",
+]
 dependencies = [
     "typer>=0.12",
     "tiktoken>=0.7",
@@ -25,6 +55,20 @@ promptmin = "promptmin.cli:app"
 
 [project.urls]
 Homepage = "https://github.com/DelvyG/promptmin"
+Repository = "https://github.com/DelvyG/promptmin"
+Issues = "https://github.com/DelvyG/promptmin/issues"
+Changelog = "https://github.com/DelvyG/promptmin/releases"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/promptmin"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "src/promptmin",
+    "tests",
+    "examples",
+    "README.md",
+    "CONTRIBUTING.md",
+    "LICENSE",
+    "pyproject.toml",
+]
