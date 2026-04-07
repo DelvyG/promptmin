@@ -49,6 +49,21 @@ Measured on the included corpus `examples/corpus_domains.txt` (18 mixed EN/ES te
 ## Install
 
 ```bash
+pip install promptminify
+```
+
+> On PyPI the package is `promptminify` (because `promptmin` was already taken), but the CLI command and Python import name are both `promptmin`:
+>
+> ```bash
+> promptmin --help
+> ```
+> ```python
+> from promptmin import minify
+> ```
+
+### From source (development)
+
+```bash
 git clone https://github.com/DelvyG/promptmin.git
 cd promptmin
 pip install -e ".[dev]"

@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "promptmin"
+name = "promptminify"
 version = "0.2.0"
 description = "Minify LLM prompts to save tokens — domain-aware, tiktoken-validated, zero regressions."
 readme = "README.md"
