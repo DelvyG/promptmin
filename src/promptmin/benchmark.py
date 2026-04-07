@@ -9,7 +9,7 @@ from pathlib import Path
 from dataclasses import dataclass
 
 from .engine import minify
-from .tokens import count
+from .tokens import count, get_counter
 
 
 @dataclass
@@ -47,12 +47,14 @@ def run_benchmark(
     mode: str = "lite",
     translate: bool = False,
     domains: list[str] | None = None,
+    tokenizer: str | None = None,
 ) -> list[Row]:
+    counter = get_counter(tokenizer)
     rows: list[Row] = []
     for i, p in enumerate(prompts):
-        res = minify(p, mode=mode, translate=translate, domains=domains)
-        b = count(p)
-        a = count(res["minified"])
+        res = minify(p, mode=mode, translate=translate, domains=domains, tokenizer=tokenizer)
+        b = counter(p)
+        a = counter(res["minified"])
         pct = 0.0 if b == 0 else (b - a) / b * 100
         rows.append(Row(
             idx=i, lang=res["lang"], before=b, after=a,

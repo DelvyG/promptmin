@@ -14,9 +14,10 @@ LLM APIs charge per token, and non-English prompts (especially Spanish) can use 
 
 Most "token savers" are naive find-and-replace scripts that don't actually save tokens (because BPE tokenizers don't count characters). PromptMin is different:
 
-- **Mathematically validated.** Rules are only applied when `tiktoken` confirms they save tokens.
+- **Mathematically validated.** Rules are only applied when the tokenizer confirms they save tokens.
 - **Curated, not massive.** ~400 high-signal rules beat 100,000 random ones.
 - **Domain-aware.** Activate dictionaries by context (`web`, `backend`, `ai`…) for aggressive but safe compression.
+- **Multi-tokenizer.** Optimize for the model you target: GPT-4o, GPT-4, Claude, Gemini.
 - **Bilingual.** First-class Spanish + English, extensible to any language via YAML.
 - **Honest benchmarks.** Run `promptmin benchmark` on your own corpus and see real numbers.
 
@@ -24,13 +25,26 @@ Most "token savers" are naive find-and-replace scripts that don't actually save 
 
 Measured on the included corpus `examples/corpus_domains.txt` (18 mixed EN/ES technical prompts):
 
+**Savings by configuration** (tokenizer: `gpt-4`):
+
 | Configuration | Tokens saved | Avg per prompt | Best |
 |---|---|---|---|
 | General rules only | 2.2% | 1.9% | 23.1% |
 | + domain dictionaries | **23.9%** | 23.2% | 38.5% |
 | + domains + translate + aggressive | **25.3%** | 24.5% | 42.3% |
 
-**Zero regressions** across all modes. The validator guarantees it.
+**Savings by tokenizer** (config: lite + all domains):
+
+| Tokenizer | Family | Total saved | Notes |
+|---|---|---|---|
+| `gpt-4` / `cl100k` | OpenAI | **23.9%** | Exact — used by GPT-4, GPT-3.5 |
+| `claude` | Anthropic | 23.9% | Approximate (cl100k_base proxy) |
+| `gemini` | Google | 23.9% | Approximate (cl100k_base proxy) |
+| `gpt-4o` / `o200k` | OpenAI | **21.7%** | Exact — used by GPT-4o, o1, o3 |
+
+> The newer `gpt-4o` tokenizer (`o200k_base`) is already more efficient on raw text than `cl100k_base`, which is why PromptMin has slightly less margin to optimize on it. This is the honest reality — and exactly why benchmarking matters.
+
+**Zero regressions** across all modes and all tokenizers. The validator guarantees it.
 
 ## Install
 
@@ -55,6 +69,14 @@ cat prompt.txt | promptmin run
 
 # With domain dictionaries
 promptmin run -d web,backend "Improve the user experience and add JWT authentication"
+
+# Target a specific model's tokenizer
+promptmin run -T claude "..."
+promptmin run -T gpt-4o "..."
+promptmin run -T gemini "..."
+
+# List all available tokenizers
+promptmin tokenizers
 
 # Spanish with automatic EN technical translation
 promptmin run -t "Por favor, desarrolla una función paso a paso para la base de datos"
@@ -147,8 +169,9 @@ Each file is plain YAML: `"long phrase": "short version"`. No code required to c
 - [x] **Phase 1** — MVP CLI (EN + ES dicts, tiktoken-validated)
 - [x] **Phase 2** — Benchmark on real corpus, `lite` / `aggressive` / `translate` modes
 - [x] **Phase 2.5** — Domain dictionaries (`web`, `backend`, `devops`, `data`, `ai`)
-- [ ] **Phase 3** — Multi-tokenizer support (Anthropic, Gemini) beyond OpenAI's `tiktoken`
-- [ ] **Phase 3** — Light stemming for Spanish conjugations (no heavy NLP deps)
+- [x] **Phase 3** — Multi-tokenizer support: GPT-4o / GPT-4 / Claude / Gemini
+- [ ] **Phase 3.5** — Official SDK integration for exact Claude/Gemini counts (optional extras)
+- [ ] **Phase 3.5** — Light stemming for Spanish conjugations (no heavy NLP deps)
 - [ ] **Phase 4** — VSCode extension ("Minify Selection" + keybinding)
 - [ ] **Phase 4** — More domains: `mobile`, `security`, `gamedev`, `finance`
 - [ ] **Phase 4** — Domain auto-detection from prompt content

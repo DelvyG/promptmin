@@ -38,13 +38,14 @@ def run(
     lang: Optional[str] = typer.Option(None, "--lang", "-l", help="Force language (es|en)."),
     translate: bool = typer.Option(False, "--translate", "-t", help="Translate ES -> EN technical."),
     domain: Optional[str] = typer.Option(None, "--domain", "-d", help="Comma-separated domains (e.g. web,backend). See `promptmin domains`."),
+    tokenizer: str = typer.Option("gpt-4o", "--tokenizer", "-T", help="Tokenizer to use. See `promptmin tokenizers`."),
     quiet: bool = typer.Option(False, "--quiet", "-q", help="Only print minified output."),
 ):
     """Minify a prompt and report token savings."""
     original = _read_input(text, file, clipboard)
     domains_list = [d.strip() for d in domain.split(",")] if domain else []
-    result = minify(original, mode=mode, lang=lang, translate=translate, domains=domains_list)
-    stats = savings(original, result["minified"])
+    result = minify(original, mode=mode, lang=lang, translate=translate, domains=domains_list, tokenizer=tokenizer)
+    stats = savings(original, result["minified"], tokenizer=tokenizer)
 
     if out_clipboard:
         import pyperclip
@@ -58,12 +59,35 @@ def run(
     typer.echo(result["minified"])
     typer.secho("--- Stats ---", fg=typer.colors.CYAN, bold=True)
     typer.echo(f"lang:        {result['lang']}")
+    typer.echo(f"tokenizer:   {result['tokenizer']}")
     if result.get("domains"):
         typer.echo(f"domains:     {', '.join(result['domains'])}")
     typer.echo(f"rules hit:   {result['rules_applied']}")
     typer.echo(f"tokens:      {stats['before']} -> {stats['after']}")
     color = typer.colors.GREEN if stats["saved"] > 0 else typer.colors.YELLOW
     typer.secho(f"saved:       {stats['saved']} ({stats['pct']}%)", fg=color, bold=True)
+
+
+@app.command()
+def tokenizers():
+    """List available tokenizer backends."""
+    from .tokens import available_tokenizers
+    typer.secho("Available tokenizers:", fg=typer.colors.CYAN, bold=True)
+    typer.echo(f"  {'NAME':<12} {'FAMILY':<10} {'EXACT':<6} ALIASES")
+    for t in available_tokenizers():
+        exact = "yes" if t["exact"] else "approx"
+        aliases = ", ".join(t["aliases"]) if t["aliases"] else "-"
+        color = typer.colors.GREEN if t["exact"] else typer.colors.YELLOW
+        typer.secho(
+            f"  {t['name']:<12} {t['family']:<10} {exact:<6} {aliases}",
+            fg=color,
+        )
+    typer.echo("\nUse with: promptmin run --tokenizer claude \"...\"")
+    typer.secho(
+        "\nNote: 'approx' tokenizers use cl100k_base as proxy. "
+        "For exact billing estimates on Claude/Gemini use their official SDKs.",
+        fg=typer.colors.BRIGHT_BLACK,
+    )
 
 
 @app.command()
@@ -87,13 +111,14 @@ def benchmark(
     mode: str = typer.Option("lite", "--mode", "-m", help="lite | aggressive"),
     translate: bool = typer.Option(False, "--translate", "-t"),
     domain: Optional[str] = typer.Option(None, "--domain", "-d", help="Comma-separated domains."),
+    tokenizer: str = typer.Option("gpt-4o", "--tokenizer", "-T", help="Tokenizer to use."),
     verbose: bool = typer.Option(False, "--verbose", "-v", help="Show every row."),
 ):
     """Run PromptMin over a corpus and report honest stats."""
     from .benchmark import load_corpus, run_benchmark, summarize
     prompts = load_corpus(corpus)
     domains_list = [d.strip() for d in domain.split(",")] if domain else []
-    rows = run_benchmark(prompts, mode=mode, translate=translate, domains=domains_list)
+    rows = run_benchmark(prompts, mode=mode, translate=translate, domains=domains_list, tokenizer=tokenizer)
     summary = summarize(rows)
 
     if verbose:
@@ -104,7 +129,8 @@ def benchmark(
 
     typer.secho("\n=== Benchmark summary ===", fg=typer.colors.CYAN, bold=True)
     typer.echo(f"prompts:         {summary['n']}")
-    typer.echo(f"mode:            {mode}{' +translate' if translate else ''}")
+    typer.echo(f"tokenizer:       {tokenizer}")
+    typer.echo(f"mode:            {mode}{' +translate' if translate else ''}{' +domains=' + ','.join(domains_list) if domains_list else ''}")
     typer.echo(f"tokens total:    {summary['tokens_before']} -> {summary['tokens_after']}")
     color = typer.colors.GREEN if summary["saved"] > 0 else typer.colors.YELLOW
     typer.secho(f"saved total:     {summary['saved']} ({summary['pct_total']}%)", fg=color, bold=True)

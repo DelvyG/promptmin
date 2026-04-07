@@ -16,7 +16,7 @@ from pathlib import Path
 from typing import Iterable
 import yaml
 
-from .tokens import count
+from .tokens import get_counter
 
 DICTS_DIR = Path(__file__).parent / "dicts"
 DOMAINS_DIR = DICTS_DIR / "domains"
@@ -91,7 +91,12 @@ def load_domains(names: Iterable[str]) -> dict[str, str]:
     return merged
 
 
-def _apply_substitutions(text: str, mapping: dict[str, str], validate: bool) -> tuple[str, int]:
+def _apply_substitutions(
+    text: str,
+    mapping: dict[str, str],
+    counter,
+    validate: bool = True,
+) -> tuple[str, int]:
     """Apply longest-first, word-boundary, case-insensitive substitutions.
     Returns (new_text, n_applied).
     """
@@ -105,7 +110,7 @@ def _apply_substitutions(text: str, mapping: dict[str, str], validate: bool) -> 
         if not pattern.search(text):
             continue
         new_text = pattern.sub(val, text)
-        if validate and count(new_text) >= count(text):
+        if validate and counter(new_text) >= counter(text):
             continue  # rule didn't actually save tokens -> skip
         text = new_text
         applied += 1
@@ -131,6 +136,7 @@ def minify(
     lang: str | None = None,
     translate: bool = False,
     domains: Iterable[str] | None = None,
+    tokenizer: str | None = None,
 ) -> dict:
     """Minify a prompt.
 
@@ -144,6 +150,7 @@ def minify(
     original = text
     lang = lang or detect_lang(text)
     domains = list(domains or [])
+    counter = get_counter(tokenizer)
 
     out = text
     rules_applied = 0
@@ -151,21 +158,21 @@ def minify(
     # 1. domain dictionaries (highest precedence, applied first)
     if domains:
         domain_map = load_domains(domains)
-        out, n = _apply_substitutions(out, domain_map, validate=True)
+        out, n = _apply_substitutions(out, domain_map, counter)
         rules_applied += n
 
     # 2. language-specific dict
     mapping = load_dict(lang)
-    out, n = _apply_substitutions(out, mapping, validate=True)
+    out, n = _apply_substitutions(out, mapping, counter)
     rules_applied += n
 
-    # 2. optional ES->EN translation layer
+    # 3. optional ES->EN translation layer
     if translate and lang == "es":
         es_en = load_dict("es_en")
-        out, n = _apply_substitutions(out, es_en, validate=True)
+        out, n = _apply_substitutions(out, es_en, counter)
         rules_applied += n
         # after translating, English dict may still help
-        out, n = _apply_substitutions(out, load_dict("en"), validate=True)
+        out, n = _apply_substitutions(out, load_dict("en"), counter)
         rules_applied += n
 
     # 3. stopwords (lite always; aggressive adds more)
@@ -184,4 +191,5 @@ def minify(
         "rules_applied": rules_applied,
         "mode": mode,
         "domains": domains,
+        "tokenizer": tokenizer or "gpt-4o",
     }
