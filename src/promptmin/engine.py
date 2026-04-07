@@ -161,17 +161,29 @@ def minify(
         out, n = _apply_substitutions(out, domain_map, counter)
         rules_applied += n
 
-    # 2. language-specific dict
+    # 2. ES->EN phrase-level translation MUST run BEFORE lang dict.
+    # Word-level ES->EN fails on modern tokenizers (o200k_base / gpt-4o)
+    # because inserting a single English word breaks Spanish BPE merges.
+    # Multi-word phrase patterns align BPE merges on both sides.
+    # Also: phrases must run before es.yaml because es.yaml mutations like
+    # "base de datos" -> "DB" would prevent phrases like "consulte la base
+    # de datos" -> "queries the DB" from ever matching.
+    if translate and lang == "es":
+        es_en_phrases = load_dict("es_en_phrases")
+        out, n = _apply_substitutions(out, es_en_phrases, counter)
+        rules_applied += n
+
+    # 3. language-specific dict (runs AFTER phrase translation so it handles
+    # whatever Spanish is left over)
     mapping = load_dict(lang)
     out, n = _apply_substitutions(out, mapping, counter)
     rules_applied += n
 
-    # 3. optional ES->EN translation layer
+    # 4. word-level ES->EN fallback + English dict cleanup
     if translate and lang == "es":
         es_en = load_dict("es_en")
         out, n = _apply_substitutions(out, es_en, counter)
         rules_applied += n
-        # after translating, English dict may still help
         out, n = _apply_substitutions(out, load_dict("en"), counter)
         rules_applied += n
 

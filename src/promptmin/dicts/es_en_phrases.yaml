@@ -1,0 +1,131 @@
+# Spanish -> English PHRASE-level translation patterns.
+#
+# WHY this file exists separate from es_en.yaml:
+# Word-level substitutions (trabajo -> job, función -> func) often FAIL to
+# save tokens on modern tokenizers (o200k_base / gpt-4o) because BPE merges
+# like "una función" are more efficient than "una func". Inserting an English
+# word in the middle of Spanish text can even INCREASE tokens.
+#
+# The solution is to rewrite LARGER chunks of Spanish at once into English,
+# so BPE merges align with the English side. These patterns capture common
+# Spanish prompt boilerplate (politeness + imperative + common verbs) and
+# map them to compact English.
+#
+# Every pattern is validated at runtime against the active tokenizer. If a
+# pattern does not reduce tokens, it is skipped automatically.
+
+# --- politeness + imperative openers --------------------------------------
+"por favor, desarrolla una": "build a"
+"por favor, desarrolla un": "build a"
+"por favor, desarrollen una": "build a"
+"por favor, desarrollen un": "build a"
+"por favor, crea una": "create a"
+"por favor, crea un": "create a"
+"por favor, implementa una": "implement a"
+"por favor, implementa un": "implement a"
+"por favor, implementa el": "implement the"
+"por favor, implementa la": "implement the"
+"por favor, escribe una": "write a"
+"por favor, escribe un": "write a"
+"por favor, genera una": "generate a"
+"por favor, genera un": "generate a"
+"por favor, revisa este": "review this"
+"por favor, revisa esta": "review this"
+"por favor, arregla este": "fix this"
+"por favor, arregla esta": "fix this"
+"por favor, explica": "explain"
+"por favor, explica cómo": "explain how"
+"por favor, explica como": "explain how"
+"por favor, muestra": "show"
+"por favor, dime": "tell me"
+
+# --- "me gustaría que" / "necesito que" openers ---------------------------
+"me gustaria que desarrolles": "build"
+"me gustaría que desarrolles": "build"
+"me gustaria que crees": "create"
+"me gustaría que crees": "create"
+"me gustaria que implementes": "implement"
+"me gustaría que implementes": "implement"
+"me gustaria que revises": "review"
+"me gustaría que revises": "review"
+"me gustaria que escribas": "write"
+"me gustaría que escribas": "write"
+"me gustaria saber": "tell me"
+"me gustaría saber": "tell me"
+"me gustaria entender": "explain"
+"me gustaría entender": "explain"
+"necesito que desarrolles": "build"
+"necesito que crees": "create"
+"necesito que implementes": "implement"
+"necesito que revises": "review"
+"necesito que escribas": "write"
+"necesito que expliques": "explain"
+"necesito entender": "explain"
+"quiero que desarrolles": "build"
+"quiero que crees": "create"
+"quiero que implementes": "implement"
+"quiero que me expliques": "explain"
+"quisiera que": ""
+
+# --- common function / code structure phrases -----------------------------
+"una funcion en python que": "a Python function that"
+"una función en python que": "a Python function that"
+"un script en python que": "a Python script that"
+"una clase en python que": "a Python class that"
+"un metodo que": "a method that"
+"un método que": "a method that"
+"una funcion que": "a function that"
+"una función que": "a function that"
+"un endpoint que": "an endpoint that"
+"una api que": "an API that"
+"un componente que": "a component that"
+
+# --- common action verbs with objects -------------------------------------
+"consulte la base de datos": "queries the DB"
+"consulte la base de datos de": "queries the"
+"que consulte": "that queries"
+"que lea": "that reads"
+"que escriba": "that writes"
+"que actualice": "that updates"
+"que elimine": "that deletes"
+"que inserte": "that inserts"
+"que retorne": "that returns"
+"que devuelva": "that returns"
+"que reciba": "that takes"
+"que acepte": "that accepts"
+"que valide": "that validates"
+"que procese": "that processes"
+"que maneje": "that handles"
+"que genere": "that generates"
+"que calcule": "that computes"
+
+# --- common return / output phrases ---------------------------------------
+"retorne un json con": "return JSON with"
+"devuelva un json con": "return JSON with"
+"retorne un json": "return JSON"
+"devuelva un json": "return JSON"
+"en formato json": "as JSON"
+"en formato csv": "as CSV"
+"un listado de": "a list of"
+"una lista de": "a list of"
+
+# --- common nouns --------------------------------------------------------
+"los usuarios activos": "active users"
+"los usuarios": "users"
+"las usuarios": "users"
+"la base de datos de usuarios": "the users DB"
+"la base de datos": "the DB"
+"el identificador de": "the ID of"
+"el id de": "the ID of"
+
+# --- connectors / tail phrases --------------------------------------------
+"paso a paso": "step by step"
+"de manera clara": "clearly"
+"de forma clara": "clearly"
+"lo mas eficiente posible": "as efficiently as possible"
+"lo más eficiente posible": "as efficiently as possible"
+"lo mas rapido posible": "ASAP"
+"lo más rápido posible": "ASAP"
+"tan pronto como sea posible": "ASAP"
+"con el siguiente formato": "in this format"
+"con el siguiente esquema": "with this schema"

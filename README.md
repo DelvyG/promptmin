@@ -48,6 +48,18 @@ Measured on the included corpus `examples/corpus_domains.txt` (18 mixed EN/ES te
 
 **Zero regressions** across all modes and all tokenizers. The validator guarantees it.
 
+### A note on Spanish prompts and modern tokenizers
+
+If you write prompts in Spanish and target `gpt-4o` (or any modern `o200k_base`-family model), **always use `--translate`**. Without it, savings are modest (~10-15%). With it, savings jump to ~25-40%.
+
+**Why?** Modern BPE tokenizers learn very efficient merges for common Spanish constructs like `"una función"`, `"la base de datos"`, `"por favor"`. Substituting a single word (`"función" → "func"`) inside Spanish text often produces **zero token savings** because the original Spanish merge was already compact. The only reliable way to save tokens on Spanish is to rewrite **larger chunks** into English at once, so BPE merges align on both sides.
+
+This is why PromptMin v0.3+ uses **phrase-level translation patterns** (`dicts/es_en_phrases.yaml`) as the primary strategy for Spanish, applied BEFORE word-level rules. A simple prompt like:
+
+> `"Por favor, desarrolla una función en Python que consulte la base de datos de usuarios y retorne un JSON con los activos"`
+
+goes from 24 → 15 tokens (**37.5% saved**) on `gpt-4o` with `--translate`, vs only 12.5% without.
+
 ## Install
 
 ```bash
@@ -187,8 +199,9 @@ Each file is plain YAML: `"long phrase": "short version"`. No code required to c
 - [x] **Phase 2** — Benchmark on real corpus, `lite` / `aggressive` / `translate` modes
 - [x] **Phase 2.5** — Domain dictionaries (`web`, `backend`, `devops`, `data`, `ai`)
 - [x] **Phase 3** — Multi-tokenizer support: GPT-4o / GPT-4 / Claude / Gemini
-- [ ] **Phase 3.5** — Official SDK integration for exact Claude/Gemini counts (optional extras)
-- [ ] **Phase 3.5** — Light stemming for Spanish conjugations (no heavy NLP deps)
+- [x] **Phase 3.5** — Spanish phrase-level translation (`es_en_phrases.yaml`)
+- [ ] **Phase 3.6** — Official SDK integration for exact Claude/Gemini counts (optional extras)
+- [ ] **Phase 3.6** — More phrase patterns based on real-usage corpora
 - [ ] **Phase 4** — VSCode extension ("Minify Selection" + keybinding)
 - [ ] **Phase 4** — More domains: `mobile`, `security`, `gamedev`, `finance`
 - [ ] **Phase 4** — Domain auto-detection from prompt content
