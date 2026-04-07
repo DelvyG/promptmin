@@ -1,0 +1,53 @@
+# DevOps / infrastructure domain dictionary.
+
+"continuous integration": "CI"
+"continuous delivery": "CD"
+"continuous deployment": "CD"
+"continuous integration and continuous delivery": "CI/CD"
+"continuous integration and deployment": "CI/CD"
+"integracion continua": "CI"
+"integración continua": "CI"
+"entrega continua": "CD"
+"despliegue continuo": "CD"
+
+"infrastructure as code": "IaC"
+"infraestructura como codigo": "IaC"
+"infraestructura como código": "IaC"
+
+"kubernetes": "k8s"
+"docker container": "container"
+"container orchestration": "orchestration"
+"load balancer": "LB"
+"balanceador de carga": "LB"
+"reverse proxy": "reverse proxy"
+
+"virtual machine": "VM"
+"maquina virtual": "VM"
+"máquina virtual": "VM"
+
+"observability": "o11y"
+"monitoring and alerting": "monitoring"
+"monitoreo y alertas": "monitoring"
+"log aggregation": "log agg"
+"distributed tracing": "tracing"
+
+"service level agreement": "SLA"
+"service level objective": "SLO"
+"service level indicator": "SLI"
+"mean time to recovery": "MTTR"
+"mean time between failures": "MTBF"
+
+"rollback deployment": "rollback"
+"blue green deployment": "blue/green"
+"canary deployment": "canary"
+"feature flag": "flag"
+"feature toggle": "flag"
+
+"environment variable": "env var"
+"environment variables": "env vars"
+"variable de entorno": "env var"
+"variables de entorno": "env vars"
+
+"github actions": "GHA"
+"pull request": "PR"
+"merge request": "MR"

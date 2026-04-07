@@ -1,0 +1,62 @@
+# AI / LLM / ML domain dictionary.
+
+"large language model": "LLM"
+"large language models": "LLMs"
+"modelo de lenguaje": "LLM"
+"modelos de lenguaje": "LLMs"
+
+"retrieval augmented generation": "RAG"
+"generacion aumentada por recuperacion": "RAG"
+"generación aumentada por recuperación": "RAG"
+
+"chain of thought": "CoT"
+"step by step reasoning": "CoT"
+"razonamiento paso a paso": "CoT"
+
+"few shot learning": "few-shot"
+"zero shot learning": "zero-shot"
+"one shot learning": "one-shot"
+"in context learning": "ICL"
+"aprendizaje en contexto": "ICL"
+
+"machine learning": "ML"
+"deep learning": "DL"
+"artificial intelligence": "AI"
+"aprendizaje automatico": "ML"
+"aprendizaje automático": "ML"
+"aprendizaje profundo": "DL"
+"inteligencia artificial": "AI"
+
+"natural language processing": "NLP"
+"procesamiento de lenguaje natural": "NLP"
+"computer vision": "CV"
+"vision por computadora": "CV"
+"visión por computadora": "CV"
+
+"neural network": "NN"
+"convolutional neural network": "CNN"
+"recurrent neural network": "RNN"
+"red neuronal": "NN"
+"red neuronal convolucional": "CNN"
+
+"fine tuning": "fine-tune"
+"fine tune": "fine-tune"
+"parameter efficient fine tuning": "PEFT"
+"reinforcement learning from human feedback": "RLHF"
+"supervised fine tuning": "SFT"
+
+"embedding model": "embedder"
+"vector database": "vec DB"
+"vector store": "vec store"
+"base de datos vectorial": "vec DB"
+
+"prompt engineering": "prompt eng"
+"system prompt": "sys prompt"
+"context window": "ctx window"
+"ventana de contexto": "ctx window"
+
+"agent": "agent"
+"agentic workflow": "agentic flow"
+"tool use": "tool-use"
+"function calling": "func calling"
+"model context protocol": "MCP"

@@ -1,0 +1,15 @@
+Please, I would like you to build a Python function that connects to the database and returns all users as a JSON response.
+Could you please refactor this code step by step and make sure to explain every change you make?
+I need you to implement a REST API with authentication using FastAPI, please include proper error handling.
+Please review this pull request and let me know if there are any issues with the implementation.
+I would like to know the difference between a list and a tuple in Python, please explain step by step.
+Por favor, me gustaría que desarrolles una función en Python que consulte la base de datos y devuelva todos los usuarios en formato JSON.
+Podrías refactorizar este código paso a paso y asegúrate de explicar cada cambio que hagas por favor.
+Necesito que implementes una API REST con autenticación usando FastAPI, por favor incluye manejo de errores apropiado.
+Por favor revisa este pull request y avísame si hay algún problema con la implementación.
+Me gustaría saber la diferencia entre una lista y una tupla en Python, por favor explica paso a paso.
+Actúa como un experto en bases de datos y explícame paso a paso cómo optimizar esta consulta SQL que es muy lenta en producción.
+You are an expert in React, please help me debug this component that is causing an infinite re-render loop in the application.
+Please write the documentation for this function, including parameters, return value, and a couple of examples of usage.
+I would like you to think step by step and explain how to set up a CI/CD pipeline with GitHub Actions for a Python project.
+Could you please implement a caching layer with Redis for this application to improve the response time of the API?

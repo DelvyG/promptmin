@@ -1,0 +1,53 @@
+# Web / frontend domain dictionary.
+# Activate with: promptmin run --domain web "..."
+# All rules validated at runtime against tiktoken.
+
+"user experience": "UX"
+"user interface": "UI"
+"experiencia de usuario": "UX"
+"interfaz de usuario": "UI"
+"experiencia del usuario": "UX"
+
+"responsive design": "responsive"
+"mobile responsive": "responsive"
+"mobile first": "mobile-first"
+"diseño responsivo": "responsive"
+"diseño adaptable": "responsive"
+"adaptabilidad movil": "responsive"
+"adaptabilidad móvil": "responsive"
+"adaptable a moviles": "responsive"
+"adaptable a móviles": "responsive"
+
+"single page application": "SPA"
+"progressive web app": "PWA"
+"server side rendering": "SSR"
+"static site generation": "SSG"
+"client side rendering": "CSR"
+
+"cascading style sheets": "CSS"
+"hypertext markup language": "HTML"
+"document object model": "DOM"
+
+"accessibility": "a11y"
+"internationalization": "i18n"
+"localization": "l10n"
+"accesibilidad": "a11y"
+"internacionalizacion": "i18n"
+"internacionalización": "i18n"
+"localizacion": "l10n"
+"localización": "l10n"
+
+"component library": "component lib"
+"design system": "design sys"
+"style guide": "styleguide"
+
+"cross browser": "x-browser"
+"browser compatibility": "browser compat"
+"compatibilidad de navegadores": "browser compat"
+
+"web performance": "web perf"
+"page load time": "LCP"
+"first contentful paint": "FCP"
+"largest contentful paint": "LCP"
+"cumulative layout shift": "CLS"
+"time to interactive": "TTI"

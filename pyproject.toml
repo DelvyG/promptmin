@@ -1,0 +1,30 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "promptmin"
+version = "0.1.0"
+description = "Minify LLM prompts to save tokens without losing meaning."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "DelvyG" }]
+requires-python = ">=3.10"
+dependencies = [
+    "typer>=0.12",
+    "tiktoken>=0.7",
+    "pyyaml>=6.0",
+    "pyperclip>=1.8",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+promptmin = "promptmin.cli:app"
+
+[project.urls]
+Homepage = "https://github.com/DelvyG/promptmin"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/promptmin"]

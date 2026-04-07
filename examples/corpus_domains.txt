@@ -1,0 +1,18 @@
+Please improve the user experience and user interface of this single page application for mobile responsive devices.
+Mejora la experiencia de usuario e interfaz de usuario de esta aplicación con diseño responsivo para móviles.
+Set up continuous integration and continuous delivery with kubernetes and docker containers for this project.
+Configura integración continua y entrega continua con kubernetes y contenedores docker para este proyecto.
+Build a REST API with JSON Web Token authentication and rate limiting using middleware in the backend.
+Construye una API REST con autenticación JWT y rate limiting usando middleware en el backend.
+Create a data pipeline for extract transform load from the data warehouse to the data lake with change data capture.
+Crea un data pipeline para extract transform load desde el almacén de datos al data lake con change data capture.
+Implement retrieval augmented generation with a vector database and large language models using chain of thought reasoning.
+Implementa retrieval augmented generation con una base de datos vectorial y modelos de lenguaje usando razonamiento paso a paso.
+Please explain the difference between server side rendering and client side rendering for a progressive web app.
+Explica la diferencia entre server side rendering y client side rendering para una progressive web app.
+Configure a blue green deployment strategy with feature flags and monitoring and alerting in production.
+Configura una estrategia de despliegue blue green con feature flags y monitoreo y alertas en producción.
+Design a star schema for the data warehouse with slowly changing dimensions for business intelligence reporting.
+Diseña un star schema para el almacén de datos con slowly changing dimensions para reportes de inteligencia de negocio.
+Fine tune a large language model with parameter efficient fine tuning using reinforcement learning from human feedback.
+Haz fine tuning de un modelo de lenguaje con parameter efficient fine tuning usando reinforcement learning from human feedback.

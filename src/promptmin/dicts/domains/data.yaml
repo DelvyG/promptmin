@@ -1,0 +1,51 @@
+# Data engineering / analytics domain dictionary.
+
+"extract transform load": "ETL"
+"extract load transform": "ELT"
+"data pipeline": "pipeline"
+"pipeline de datos": "pipeline"
+
+"data warehouse": "DWH"
+"data lake": "lake"
+"data lakehouse": "lakehouse"
+"almacen de datos": "DWH"
+"almacén de datos": "DWH"
+
+"data frame": "df"
+"dataframe": "df"
+
+"exploratory data analysis": "EDA"
+"analisis exploratorio de datos": "EDA"
+"análisis exploratorio de datos": "EDA"
+
+"business intelligence": "BI"
+"inteligencia de negocio": "BI"
+"inteligencia de negocios": "BI"
+
+"key performance indicator": "KPI"
+"indicador clave de desempeño": "KPI"
+"indicador clave de rendimiento": "KPI"
+
+"primary key": "PK"
+"foreign key": "FK"
+
+"change data capture": "CDC"
+"slowly changing dimension": "SCD"
+"star schema": "star"
+"snowflake schema": "snowflake"
+
+"structured query language": "SQL"
+"not only sql": "NoSQL"
+"online transaction processing": "OLTP"
+"online analytical processing": "OLAP"
+
+"data quality": "DQ"
+"data governance": "DG"
+"master data management": "MDM"
+"calidad de datos": "DQ"
+"gobernanza de datos": "DG"
+
+"batch processing": "batch"
+"stream processing": "stream"
+"real time": "realtime"
+"tiempo real": "realtime"
